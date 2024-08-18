@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:useful_services_frontend/models/fuel_prices.dart';
 
 class Requests {
-  static const mainUrl = "https://58a0-85-230-108-187.ngrok-free.app/";
+  static const mainUrl = "http://localhost:8080/";
   static const consumptionConversionUrl = "${mainUrl}compare_consumption/";
 
   static Future<List<String>> getSupportedCountries() async {
@@ -17,14 +17,21 @@ class Requests {
     return List<String>.from(jsonDecode(response.body));
   }
 
-  static Future<List<String>> compareConsumption() async {
+  static Future<double?> compareConsumption(
+      double gasPrice, double electricityPrice) async {
     var url = Uri.parse("${consumptionConversionUrl}compare_consumption");
-    var response = await http.post(url);
+    var response = await http.post(
+      url,
+      body: jsonEncode(
+        {"gas_price": gasPrice, "electricity_price": electricityPrice},
+      ),
+    );
+
     if (response.statusCode != 200) {
-      return [];
+      return null;
     }
 
-    return List<String>.from(jsonDecode(response.body));
+    return double.parse(jsonDecode(response.body)['lkm_to_kwhkm'].toString());
   }
 
   static Future<FuelPrices?> getCountryPrices(String country) async {
