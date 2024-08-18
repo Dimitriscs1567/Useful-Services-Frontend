@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:useful_services_frontend/tabs/consumption_convertion_tab.dart';
+import 'package:useful_services_frontend/tabs/compare_consumption_tab.dart';
+import 'package:useful_services_frontend/tabs/consumption_convertions.dart';
 import 'package:useful_services_frontend/tabs/other_tab.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,7 +32,11 @@ class _HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.gas_meter),
-            label: 'Consumption Convertion',
+            label: 'Compare Consumption',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.currency_exchange),
+            label: 'Consumption Convertions',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.device_unknown),
@@ -47,22 +52,26 @@ class _HomePageState extends State<HomePage> {
   Widget _getTabScreen() {
     switch (_selectedTab) {
       case 0:
-        return const ConsumptionConvertionTab();
+        return const CompareConsumptionTab();
       case 1:
+        return const ConsumptionConvertions();
+      case 2:
         return const OtherTab();
       default:
-        return const OtherTab();
+        return const CompareConsumptionTab();
     }
   }
 
   String _getTabTitle() {
     switch (_selectedTab) {
       case 0:
-        return "Consumption Convertion";
+        return "Compare Consumption";
       case 1:
+        return "Consumption Convertions";
+      case 2:
         return "Other";
       default:
-        return "Other";
+        return "Compare Consumption";
     }
   }
 }

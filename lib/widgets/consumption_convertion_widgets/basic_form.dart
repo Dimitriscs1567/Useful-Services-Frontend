@@ -5,8 +5,13 @@ import 'package:useful_services_frontend/utils/requests.dart';
 
 class BasicForm extends StatefulWidget {
   final Function(double gasPrice, double electricityPrice) changePrices;
+  final bool disableFields;
 
-  const BasicForm({super.key, required this.changePrices});
+  const BasicForm({
+    super.key,
+    required this.changePrices,
+    required this.disableFields,
+  });
 
   @override
   State<BasicForm> createState() => _BasicFormState();
@@ -39,8 +44,8 @@ class _BasicFormState extends State<BasicForm> {
 
   changePrices() {
     widget.changePrices(
-      double.parse(_gasController.text),
-      double.parse(_electricityController.text),
+      double.tryParse(_gasController.text) ?? 0.0,
+      double.tryParse(_electricityController.text) ?? 0.0,
     );
   }
 
@@ -87,6 +92,7 @@ class _BasicFormState extends State<BasicForm> {
                   });
                 },
                 selectedItem: _selectedCountry,
+                enabled: _priceFieldsEnabled && !widget.disableFields,
               ),
               const Padding(padding: EdgeInsets.all(10.0)),
               TextField(
@@ -96,7 +102,7 @@ class _BasicFormState extends State<BasicForm> {
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
-                enabled: _priceFieldsEnabled,
+                enabled: _priceFieldsEnabled && !widget.disableFields,
               ),
               const Padding(padding: EdgeInsets.all(12.0)),
               Row(
@@ -129,7 +135,7 @@ class _BasicFormState extends State<BasicForm> {
                       },
                       decoration: InputDecoration(
                         labelText: "Type of charging",
-                        enabled: _priceFieldsEnabled,
+                        enabled: _priceFieldsEnabled && !widget.disableFields,
                       ),
                     ),
                   ),
@@ -142,7 +148,7 @@ class _BasicFormState extends State<BasicForm> {
                       ),
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
-                      enabled: _priceFieldsEnabled,
+                      enabled: _priceFieldsEnabled && !widget.disableFields,
                     ),
                   ),
                 ],

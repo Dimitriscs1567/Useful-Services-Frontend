@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:useful_services_frontend/models/button_state.dart';
+import 'package:useful_services_frontend/models/enum_states.dart';
 
 class CalculationButton extends StatefulWidget {
   final ButtonState buttonState;
@@ -20,10 +20,20 @@ class _CalculationButtonState extends State<CalculationButton> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 45,
+      height: 50,
       child: ElevatedButton(
-        onPressed: widget.onPressed,
-        child: const Text('Calculate'),
+        onPressed:
+            widget.buttonState == ButtonState.enabled ? widget.onPressed : null,
+        style: const ButtonStyle(
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+          ),
+        ),
+        child: widget.buttonState == ButtonState.loading
+            ? const CircularProgressIndicator()
+            : const Text('Calculate'),
       ),
     );
   }

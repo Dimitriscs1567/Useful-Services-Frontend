@@ -4,3 +4,8 @@ enum ButtonState {
   disabled,
   hidden,
 }
+
+enum ConsumptionField {
+  gas,
+  electricity,
+}

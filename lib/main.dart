@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Useful Services',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lime[700]!),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lime[700]!)
+            .copyWith(surface: Colors.white),
         useMaterial3: true,
       ),
       home: const HomePage(),
